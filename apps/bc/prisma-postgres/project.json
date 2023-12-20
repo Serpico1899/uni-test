@@ -1,0 +1,53 @@
+{
+  "name": "prisma-postgres",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/bc/prisma-postgres/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/bc/prisma-postgres",
+        "main": "apps/bc/prisma-postgres/src/main.ts",
+        "tsConfig": "apps/bc/prisma-postgres/tsconfig.app.json",
+        "assets": ["apps/bc/prisma-postgres/src/assets"],
+        "webpackConfig": "apps/bc/prisma-postgres/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "prisma-postgres:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "prisma-postgres:build:development"
+        },
+        "production": {
+          "buildTarget": "prisma-postgres:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/bc/prisma-postgres/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}
